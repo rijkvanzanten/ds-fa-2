@@ -1,5 +1,7 @@
 const express = require("express");
 
+require("dotenv").config();
+
 module.exports = express()
   .set("view engine", "ejs")
   .set("views", "./views")
