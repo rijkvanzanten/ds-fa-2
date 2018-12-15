@@ -4,8 +4,10 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "fix": "prettier --write \"**/*.{css,js}\"",
+    "install": "node install/"
   },
   "keywords": [],
   "author": "",
@@ -14,5 +16,9 @@
     "aws-sdk": "^2.377.0",
     "ejs": "^2.6.1",
     "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9",
+    "prettier": "^1.15.3"
   }
 }
