@@ -2,8 +2,8 @@
 <main>
   <h1>Posts tagged “<%= tag %>”</h1>
   <ol>
+    <% items.forEach(item => { %>
     <li>
-      <% items.forEach(item => { %>
       <article>
         <a href="/<%= item.slug %>">
           <img src="/img/<%= item.image %>" alt="<%= item.title %>" />
@@ -15,8 +15,8 @@
           </div>
         </a>
       </article>
-      <% }); %>
     </li>
+    <% }); %>
   </ol>
 </main>
 <%- include("./partials/foot.ejs") %>

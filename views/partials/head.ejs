@@ -2,10 +2,11 @@
 <head>
   <meta charset="utf-8">
   <title><%= locals.title ? locals.title + " | Dear Diary" : "Dear Diary" %></title>
+  <link href="https://fonts.googleapis.com/css?family=Staatliches" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
   <script src="/script.js" defer></script>
 </head>
-<body>
+<body class="<%= locals.bodyClass || null %>">
   <header>
     <a href="/">
       <h1>Rijk's Readings</h1>

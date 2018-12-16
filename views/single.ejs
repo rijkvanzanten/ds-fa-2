@@ -1,15 +1,17 @@
 <%- include("./partials/head.ejs") %>
 <main>
-  <h1><%= item.title %></h1>
-  <time datetime="<%= item.datetime %>"><%= item.datetimeRelative %></time>
   <div>
-    <% item.keywords.forEach(keyword => { %>
-    <a href="/tag/<%= keyword %>"><%= keyword %></a>
-    <% }); %>
+    <h1><%= item.title %></h1>
+    <time datetime="<%= item.datetime %>"><%= item.datetimeRelative %></time>
+    <div>
+      <% item.keywords.forEach(keyword => { %>
+      <a href="/tag/<%= keyword %>"><%= keyword %></a>
+      <% }); %>
+    </div>
+    <%- item.content.html %>
+    <% if (item.link) { %>
+    <a href="<%= item.link %>">Read the full article</a>
+    <% } %>
   </div>
-  <%- item.content.html %>
-  <% if (item.link) { %>
-  <a href="<%= item.link %>">Read the full article</a>
-  <% } %>
 </main>
 <%- include("./partials/foot.ejs") %>

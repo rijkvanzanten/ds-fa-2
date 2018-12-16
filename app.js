@@ -40,7 +40,7 @@ function renderHome(req, res) {
       return new Date(a.datetime) < new Date(b.datetime) ? 1 : -1;
     });
 
-    return res.render("index", { items });
+    return res.render("index", { items: items, bodyClass: "home" });
   });
 }
 
@@ -70,7 +70,7 @@ function renderSingle(req, res) {
 
     data.datetimeRelative = formatRelative(new Date(data.datetime), new Date());
 
-    return res.render("single", { item: data });
+    return res.render("single", { item: data, bodyClass: "single" });
   });
 }
 
@@ -98,7 +98,8 @@ function renderTag(req, res) {
 
     return res.render("tag", {
       tag: tag,
-      items: items
+      items: items,
+      bodyClass: "tag"
     });
   });
 }
