@@ -95,7 +95,7 @@ const posts = fileNames.map(
 series(
   // Convert each post to a function that saves the post to the DB
   posts.map(post => cb => {
-    db.put({ TableName: "deardiary", Item: post }, err => {
+    db.put({ TableName: process.env.AWS_TABLE, Item: post }, err => {
       if (err) {
         console.log(err);
         cb(err);

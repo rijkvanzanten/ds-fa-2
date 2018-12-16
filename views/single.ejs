@@ -1,5 +1,13 @@
 <%- include("./partials/head.ejs") %>
 <main>
-  Single
+  <h1><%= item.title %></h1>
+  <time datetime="<%= item.datetime %>"><%= item.datetimeRelative %></time>
+  <div>
+    <% item.keywords.forEach(keyword => { %>
+    <a href="/tag/<%= keyword %>"><%= keyword %></a>
+    <% }); %>
+  </div>
+  <%- item.content.html %>
+  <a href="<%= item.link %>">Read the full article</a>
 </main>
 <%- include("./partials/foot.ejs") %>

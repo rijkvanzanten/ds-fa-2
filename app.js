@@ -1,5 +1,6 @@
 const express = require("express");
 const AWS = require("aws-sdk");
+const formatRelative = require("date-fns/formatRelative");
 
 require("dotenv").config();
 
@@ -24,8 +25,8 @@ function renderHome(req, res) {
   // those. 
   // I was hoping to fetch just the last 7 items sorted by date, but alas.
   const params = {
-    TableName: "deardiary",
-    ProjectionExpression: "slug, author, image, title"
+    TableName: process.env.AWS_TABLE,
+    ProjectionExpression: "slug, author, image, title, link"
   };
 
   const data = db.scan(params, function(error, data) {
@@ -34,7 +35,7 @@ function renderHome(req, res) {
       res.status(500).end();
     }
 
-    const items = data.Items.sort((a, b) => {
+    const items = data.Items.sort(function(a, b) {
       return new Date(a.datetime) < new Date(b.datetime) ? 1 : -1;
     });
 
@@ -43,7 +44,33 @@ function renderHome(req, res) {
 }
 
 function renderSingle(req, res) {
-  res.render("single");
+  const slug = req.params.slug;
+
+  const params = {
+    TableName: process.env.AWS_TABLE,
+    Key: {
+      slug: slug
+    },
+    ProjectionExpression: "content.html, #dt, image, keywords, author, title",
+    ExpressionAttributeNames: {
+      "#dt": "datetime"
+    }
+  };
+
+  db.get(params, function(error, data) {
+    if (error) {
+      console.log(error);
+      return res.status(500).end();
+    }
+
+    if (!data.Item) return res.status(404).render("not-found");
+
+    data = data.Item;
+
+    data.datetimeRelative = formatRelative(new Date(data.datetime), new Date());
+
+    return res.render("single", { item: data });
+  });
 }
 
 function notFound(req, res) {
