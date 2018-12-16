@@ -16,6 +16,7 @@ module.exports = express()
   .set("views", "./views")
   .use(express.static("./public"))
   .get("/", renderHome)
+  .get("/tag/:tag", renderTag)
   .get("/:slug", renderSingle)
   .all("*", notFound);
 
@@ -32,14 +33,14 @@ function renderHome(req, res) {
   const data = db.scan(params, function(error, data) {
     if (error) {
       console.log(error);
-      res.status(500).end();
+      return res.status(500).end();
     }
 
     const items = data.Items.sort(function(a, b) {
       return new Date(a.datetime) < new Date(b.datetime) ? 1 : -1;
     });
 
-    res.render("index", { items });
+    return res.render("index", { items });
   });
 }
 
@@ -51,7 +52,7 @@ function renderSingle(req, res) {
     Key: {
       slug: slug
     },
-    ProjectionExpression: "content.html, #dt, image, keywords, author, title",
+    ProjectionExpression: "content.html, #dt, image, keywords, author, title, link",
     ExpressionAttributeNames: {
       "#dt": "datetime"
     }
@@ -70,6 +71,35 @@ function renderSingle(req, res) {
     data.datetimeRelative = formatRelative(new Date(data.datetime), new Date());
 
     return res.render("single", { item: data });
+  });
+}
+
+function renderTag(req, res) {
+  const tag = req.params.tag;
+
+  const params = {
+    TableName: process.env.AWS_TABLE,
+    ProjectionExpression: "slug, author, image, title, link",
+    FilterExpression: "contains(keywords, :tag)",
+    ExpressionAttributeValues: {
+      ":tag": tag
+    }
+  };
+
+  const data = db.scan(params, function(error, data) {
+    if (error) {
+      console.log(error);
+      return res.status(500).end();
+    }
+
+    const items = data.Items.sort(function(a, b) {
+      return new Date(a.datetime) < new Date(b.datetime) ? 1 : -1;
+    });
+
+    return res.render("tag", {
+      tag: tag,
+      items: items
+    });
   });
 }
 

@@ -8,6 +8,8 @@
     <% }); %>
   </div>
   <%- item.content.html %>
+  <% if (item.link) { %>
   <a href="<%= item.link %>">Read the full article</a>
+  <% } %>
 </main>
 <%- include("./partials/foot.ejs") %>

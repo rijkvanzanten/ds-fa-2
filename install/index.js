@@ -49,7 +49,7 @@ const db = new AWS.DynamoDB.DocumentClient();
 
 class DynamoPost {
   constructor({ data, content }) {
-    const { slug, title, keywords, datetime, author, image } = data;
+    const { slug, title, keywords, datetime, author, image, link } = data;
 
     this.slug = slug;
     this.title = title;
@@ -71,6 +71,10 @@ class DynamoPost {
 
     if (author) {
       this.author = author;
+    }
+
+    if (link) {
+      this.link = link;
     }
   }
 }

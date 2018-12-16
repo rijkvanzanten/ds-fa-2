@@ -1,0 +1,22 @@
+<%- include("./partials/head.ejs") %>
+<main>
+  <h1>Posts tagged “<%= tag %>”</h1>
+  <ol>
+    <li>
+      <% items.forEach(item => { %>
+      <article>
+        <a href="/<%= item.slug %>">
+          <img src="/img/<%= item.image %>" alt="<%= item.title %>" />
+          <div>
+            <h2><%= item.title %></h2>
+            <% if (item.author) { %>
+            <p>By <%= item.author %></p>
+            <% } %>
+          </div>
+        </a>
+      </article>
+      <% }); %>
+    </li>
+  </ol>
+</main>
+<%- include("./partials/foot.ejs") %>
