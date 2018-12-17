@@ -1,16 +1,18 @@
 <%- include("./partials/head.ejs") %>
 <main>
   <div>
-    <h1><%= item.title %></h1>
-    <time datetime="<%= item.datetime %>"><%= item.datetimeRelative %></time>
-    <div>
+    <h2><%= item.title %></h2>
+    <time datetime="<%= item.datetime %>"><%= item.datetimeRelative %></time> • 
+    <span>
       <% item.keywords.forEach(keyword => { %>
       <a href="/tag/<%= keyword %>"><%= keyword %></a>
       <% }); %>
-    </div>
+    </span>
+    <div id="content">
     <%- item.content.html %>
+    </div>
     <% if (item.link) { %>
-    <a href="<%= item.link %>">Read the full article</a>
+    <a id="link" href="<%= item.link %>">Read the full article</a>
     <% } %>
   </div>
 </main>

@@ -23,7 +23,7 @@ module.exports = express()
 function renderHome(req, res) {
   // DynamoDB doesn't support a way to "query" data by a specific date range
   // Therefore, the next best thing we can do is retrieve all the items and display
-  // those. 
+  // those.
   // I was hoping to fetch just the last 7 items sorted by date, but alas.
   const params = {
     TableName: process.env.AWS_TABLE,
@@ -52,7 +52,8 @@ function renderSingle(req, res) {
     Key: {
       slug: slug
     },
-    ProjectionExpression: "content.html, #dt, image, keywords, author, title, link",
+    ProjectionExpression:
+      "content.html, #dt, image, keywords, author, title, link",
     ExpressionAttributeNames: {
       "#dt": "datetime"
     }
@@ -99,7 +100,7 @@ function renderTag(req, res) {
     return res.render("tag", {
       tag: tag,
       items: items,
-      bodyClass: "tag"
+      bodyClass: "tag home"
     });
   });
 }

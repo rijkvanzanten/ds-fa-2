@@ -119,10 +119,12 @@ series(
     if (err) {
       return console.log(kleur.red("Something went wrong..."));
     }
-    
+
     console.log(`
 
-${kleur.green("Successfully")} saved ${kleur.blue(fileNames.length)} posts to ${kleur.yellow("Amazon DynamoDB")} 🎉
+${kleur.green("Successfully")} saved ${kleur.blue(
+      fileNames.length
+    )} posts to ${kleur.yellow("Amazon DynamoDB")} 🎉
 
     `);
   }
